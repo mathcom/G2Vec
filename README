@@ -18,23 +18,25 @@ example:
 
 	$ python CPR.py ex_EXPRESSION.txt ex_CLINICAL ex_NETWORK.txt ex_RESULT
 	>>> 0. Arguments
-	Namespace(CLINICAL_FILE='ex_CLINICAL.txt', EXPRESSION_FILE='ex_EXPRESSION.txt', NETWORK_FILE='ex_NETWORK.txt', RESULT_FILE='ex_RESULT', epoch=500, learningRate=0.005, lenPath=80, numBiomarker=50, numRepetition=10, sizeHiddenlayer=128)
+	Namespace(CLINICAL_FILE='ex_CLINICAL.txt', EXPRESSION_FILE='ex_EXPRESSION.txt', NETWORK_FILE='ex_NETWORK.txt', RESULT_NAME='ex_RESULT', epoch=500, learningRate=0.005, lenPath=80, numBiomarker=50, numRepetition=10, sizeHiddenlayer=128)
 	>>> 1. Load data
 	>>> 2. Preprocess data
 		n_samples: 135
-		n_genes  : 7523	(common genes in both EXPRESSION and NETWORK)
-		n_edges  : 216540	(edges with the common genes)
+		n_genes  : 7523     (common genes in both EXPRESSION and NETWORK)
+		n_edges  : 216540   (edges with the common genes)
 	>>> 3. Generate random paths from each group
-		n_paths : 45447
-		n_genes : 3770	(genes in good or poor random paths)
+		*** most time consuming step ***
+		n_paths : 45402
+		n_genes : 3773      (genes in good or poor random paths)
 	>>> 4. Compute distributed representations using modified CBOW
-		Start learning with 500 epochs
-		- Epoch: 000	ACC[val]=0.6221	ACC[tr]=0.6309 (1.404 sec)
-		- Epoch: 005	ACC[val]=0.8032	ACC[tr]=0.8247 (6.355 sec)
-		- Epoch: 010	ACC[val]=0.8371	ACC[tr]=0.8611 (6.534 sec)
-		- Epoch: 015	ACC[val]=0.8557	ACC[tr]=0.8831 (6.243 sec)
-		- Epoch: 020	ACC[val]=0.8673	ACC[tr]=0.8976 (6.699 sec)
-		- Epoch(stop): 021	ACC[val]=0.8691	ACC[tr]=0.9001 (2.609 sec)
+	Start training the modified CBOW with early stopping
+		- Epoch: 000        ACC[val]=0.6336 ACC[tr]=0.6310 (2.369 sec)
+		- Epoch: 005        ACC[val]=0.8044 ACC[tr]=0.8232 (10.459 sec)
+		- Epoch: 010        ACC[val]=0.8434 ACC[tr]=0.8633 (11.008 sec)
+		- Epoch: 015        ACC[val]=0.8626 ACC[tr]=0.8860 (10.811 sec)
+		- Epoch: 020        ACC[val]=0.8728 ACC[tr]=0.9006 (11.119 sec)
+		- Epoch: 025        ACC[val]=0.8812 ACC[tr]=0.9106 (10.898 sec)
+		- Epoch(stop): 027  ACC[val]=0.8837 ACC[tr]=0.9142 (6.811 sec)
 		Optimization Finish
 	>>> 5. Find L-groups
 	>>> 6. Select biomarkers with gene scores

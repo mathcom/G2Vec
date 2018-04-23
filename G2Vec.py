@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 
 def main():
 	'''
-	args={'EXPRESSION_FILE', 'CLINICAL_FILE', 'NETWORK_FILE', 'RESULT_FILE',
+	args={'EXPRESSION_FILE', 'CLINICAL_FILE', 'NETWORK_FILE', 'RESULT_NAME',
 	      'lenPath', 'numRepetition', 'sizeHiddenlayer', 'learningRate', 'numBiomarker'}
 	'''
 	args = parse_arguments()
@@ -111,12 +111,12 @@ def main():
 	
 	######## 7. Save results
 	print(">>> 7. Save results")
-	fwrite_biomarker(args.RESULT_FILE, biomarkerList)    # Save 1) *_biomarkers
-	print('    %s_biomarkers.txt' % args.RESULT_FILE)
-	fwrite_lgroupIdx(args.RESULT_FILE, lgroupIdx, data['gene'])    # Save 2) *_lgroups
-	print('    %s_lgroups.txt' % args.RESULT_FILE)
-	fwrite_genetovec(args.RESULT_FILE, genetovec)    # Save 3) *_vectors
-	print('    %s_vectors.txt' % args.RESULT_FILE)
+	fwrite_biomarker(args.RESULT_NAME, biomarkerList)    # Save 1) *_biomarkers
+	print('    %s_biomarkers.txt' % args.RESULT_NAME)
+	fwrite_lgroupIdx(args.RESULT_NAME, lgroupIdx, data['gene'])    # Save 2) *_lgroups
+	print('    %s_lgroups.txt' % args.RESULT_NAME)
+	fwrite_genetovec(args.RESULT_NAME, genetovec)    # Save 3) *_vectors
+	print('    %s_vectors.txt' % args.RESULT_NAME)
 
 	
 	
@@ -508,7 +508,7 @@ def parse_arguments():
 	parser.add_argument('EXPRESSION_FILE', type=str, help="Tab-delimited file for gene expression profiles.")
 	parser.add_argument('CLINICAL_FILE', type=str, help="Tab-delimited file for patient's clinical data. LABEL=0:good prognosis and 1:poor prognosis.")
 	parser.add_argument('NETWORK_FILE', type=str, help="Tab-delimited file for gene interaction network.")
-	parser.add_argument('RESULT_FILE', type=str, help="The results of G2Vec are saved with the following four names: 1) *_biomarkers.txt, 2) *_lgroups.txt, and 3) *_vectors.txt")
+	parser.add_argument('RESULT_NAME', type=str, help="The results of G2Vec are saved with the following four names: 1) *_biomarkers.txt, 2) *_lgroups.txt, and 3) *_vectors.txt")
 	parser.add_argument('-p', '--lenPath', type=int, default=80, help='')
 	parser.add_argument('-r', '--numRepetition', type=int, default=10, help='')
 	parser.add_argument('-s', '--sizeHiddenlayer', type=int, default=128, help='')
