@@ -11,7 +11,7 @@ from sklearn.cluster import KMeans
 def main():
 	'''
 	args={'EXPRESSION_FILE', 'CLINICAL_FILE', 'NETWORK_FILE', 'RESULT_FILE',
-	      'lenPath', 'numRepetition', 'sizeHiddenlayer', 'epoch', 'learningRate', 'numBiomarker'}
+	      'lenPath', 'numRepetition', 'sizeHiddenlayer', 'learningRate', 'numBiomarker'}
 	'''
 	args = parse_arguments()
 	print('>>> 0. Arguments')
@@ -55,6 +55,7 @@ def main():
 	
 	######## 3. Generate random paths from each group
 	print('>>> 3. Generate random paths from each group')
+	print('    *** most time consuming step ***')
 	pathSetList = []
 	for i, group in enumerate(['g', 'p']):
 		adjMat = construct_adjMat(network['edge'], data, i)
@@ -70,7 +71,7 @@ def main():
 	######## 4. Compute distributed representations using modified CBOW
 	print(">>> 4. Compute distributed representations using modified CBOW")
 	genetovec = dict()
-	genetovec['mat'] = compute_genetovec(pathList, n_genes, args.sizeHiddenlayer, args.epoch, args.learningRate)
+	genetovec['mat'] = compute_genetovec(pathList, n_genes, args.sizeHiddenlayer, args.learningRate)
 	genetovec['gene'] = deepcopy(data['gene'])
 
 	
@@ -213,7 +214,7 @@ def fwrite_genetovec(RESULTFILE, genetovec):
 				fout.write("\t%.6f" % val)
 			fout.write("\n")
 
-def compute_genetovec(pathList, n_genes, hidden_size, training_epochs, learning_rate):
+def compute_genetovec(pathList, n_genes, hidden_size, learning_rate):
 	## Hold-out: training(80%) and validating(20%) data
 	np.random.shuffle(pathList)
 	pivot = int(len(pathList) * 0.8)
@@ -254,11 +255,11 @@ def compute_genetovec(pathList, n_genes, hidden_size, training_epochs, learning_
 	with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
 		## 4-1) Initialize all variables
 		tf.global_variables_initializer().run()
-		## 4-2) Start learning the model
-		print("     Start learning with %d epochs" % (training_epochs))
+		## 4-2) Start training the model
+		print("     Start training the modified CBOW with early stopping")
 		start_time = time.time()
 		before_acc_val = -1.
-		for step in range(training_epochs):
+		for step in range(500):
 			## Optimization
 			_ = sess.run(optimizer, feed_dict={X:x_training, Y:y_training})
 			## Compute Accuracy
