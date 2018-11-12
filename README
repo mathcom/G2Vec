@@ -16,7 +16,7 @@ USAGE:
 --------------------------------------------------------------------------------------------
 example:
 
-	$ python CPR.py ex_EXPRESSION.txt ex_CLINICAL ex_NETWORK.txt ex_RESULT
+	$ python G2Vec.py ex_EXPRESSION.txt ex_CLINICAL ex_NETWORK.txt ex_RESULT
 	>>> 0. Arguments
 	Namespace(CLINICAL_FILE='ex_CLINICAL.txt', EXPRESSION_FILE='ex_EXPRESSION.txt', NETWORK_FILE='ex_NETWORK.txt', RESULT_NAME='ex_RESULT', epoch=500, learningRate=0.005, lenPath=80, numBiomarker=50, numRepetition=10, sizeHiddenlayer=128)
 	>>> 1. Load data
