@@ -1,3 +1,5 @@
+# G2Vec: Distributed gene representations for identification of cancer prognostic genes
+
 G2Vec is a novel network-based deep learning method to identify prognostic gene signatures (biomarkers).
 
 Please refer to included 'manual.pdf'.
